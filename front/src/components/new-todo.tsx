@@ -1,4 +1,3 @@
-import { Todo } from "@/__generated__/graphql";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { CREATE_TODO } from "@/lib/gql/mutations/todo";
 import { useMutation } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 

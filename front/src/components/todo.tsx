@@ -9,8 +9,6 @@ import { DELETE_TODO } from "@/lib/gql/mutations/todo";
 import { useMutation } from "@apollo/client";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
-import { useEffect } from "react";
-import { GET_TODOS } from "@/lib/gql/queries/todo";
 
 type Props = {
   todo: TTodo;

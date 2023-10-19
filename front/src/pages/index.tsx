@@ -3,7 +3,7 @@ import NewTodo from "@/components/new-todo";
 import Todo from "@/components/todo";
 import { GET_TODOS } from "@/lib/gql/queries/todo";
 import { useQuery } from "@apollo/client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Index = () => {
   const { data } = useQuery(GET_TODOS);

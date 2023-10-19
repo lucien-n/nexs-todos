@@ -48,13 +48,15 @@ const NewTodo = ({ refetchQuery }: Props) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-full items-end gap-3 mt-3"
+      >
         <FormField
           control={form.control}
           name="content"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Content</FormLabel>
+            <FormItem className="w-full">
               <FormControl>
                 <Input placeholder="Walk the dog" {...field}></Input>
               </FormControl>

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { DELETE_TODO, UPDATE_TODO } from "@/lib/gql/mutations/todo";
 import { useMutation } from "@apollo/client";
+import { Trash2 } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
@@ -44,22 +45,22 @@ const Todo = ({ todo, refetchQuery }: Props) => {
   };
 
   return (
-    <Card className="flex w-full m-0 gap-3 px-3 py-1 items-center">
-      <CardHeader className="p-0 m-0">
+    <Card className="flex w-full m-0 gap-3 items-center">
+      <CardHeader className="p-3 pr-0">
         <Checkbox
           onClick={handleCompleteClick}
           checked={completed}
           disabled={updateLoading}
         />
       </CardHeader>
-      <CardContent className="p-0 m-0 w-full">{todo.content}</CardContent>
+      <CardContent className="py-2 px-1 w-full">{todo.content}</CardContent>
       <CardFooter className="p-0 m-0">
         <Button
           disabled={deleteLoading}
-          variant={"destructive"}
+          variant="ghost"
           onClick={() => handleDeleteClick()}
         >
-          {deleteLoading ? "Deleting" : "Delete"}
+          <Trash2></Trash2>
         </Button>
       </CardFooter>
     </Card>

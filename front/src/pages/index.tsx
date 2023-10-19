@@ -1,4 +1,6 @@
 import { Todo as TTodo } from "@/__generated__/graphql";
+import NewTodo from "@/components/new-todo";
+import Todo from "@/components/todo";
 import { GET_TODOS } from "@/lib/gql/queries/todo";
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
@@ -13,11 +15,12 @@ const Index = () => {
   }, [data]);
 
   return (
-    <h1>
+    <main>
       {todos.map((todo) => (
-        <div key={todo.id}>{todo.content}</div>
+        <Todo todo={todo} key={todo.id} />
       ))}
-    </h1>
+      <NewTodo />
+    </main>
   );
 };
 

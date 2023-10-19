@@ -18,21 +18,6 @@ const Index = () => {
       );
   };
 
-  const onNew = useCallback(
-    (data: TTodo) => {
-      const { __typename, ...todo } = data;
-      setTodos([...todos, todo]);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [todos, setTodos]
-  );
-
-  const onDelete = useCallback(
-    (id: string) => setTodos(todos.filter(({ id: _id }) => id !== _id)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [todos, setTodos]
-  );
-
   useEffect(() => {
     if (!data?.todos) return;
     setTodos(data.todos);
@@ -40,9 +25,9 @@ const Index = () => {
 
   return (
     <section>
-      <NewTodo onNew={onNew} />
+      <NewTodo refetchQuery={GET_TODOS} />
       {sortTodos(todos).map((todo) => (
-        <Todo todo={todo} key={todo.id} onDelete={onDelete} />
+        <Todo todo={todo} key={todo.id} refetchQuery={GET_TODOS} />
       ))}
     </section>
   );

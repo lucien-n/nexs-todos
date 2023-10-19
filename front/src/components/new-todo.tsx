@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 type Props = {
-  onNew: (todo: Todo) => void;
+  refetchQuery: any;
 };
 
 const formSchema = z.object({
@@ -25,9 +25,9 @@ const formSchema = z.object({
   }),
 });
 
-const NewTodo = ({ onNew }: Props) => {
+const NewTodo = ({ refetchQuery }: Props) => {
   const [createTodo, { data: createData, loading: createLoading }] =
-    useMutation(CREATE_TODO);
+    useMutation(CREATE_TODO, { refetchQueries: [{ query: refetchQuery }] });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,10 +47,6 @@ const NewTodo = ({ onNew }: Props) => {
       },
     });
   };
-
-  useEffect(() => {
-    if (createData?.createTodo) onNew(createData.createTodo);
-  }, [createData]);
 
   return (
     <Form {...form}>

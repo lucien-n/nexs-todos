@@ -14,21 +14,17 @@ import { GET_TODOS } from "@/lib/gql/queries/todo";
 
 type Props = {
   todo: TTodo;
-  onDelete: (id: string) => void;
+  refetchQuery: any;
 };
 
-const Todo = ({ todo, onDelete }: Props) => {
+const Todo = ({ todo, refetchQuery }: Props) => {
   const [deleteTodo, { data: deleteData, loading: deleteLoading }] =
-    useMutation(DELETE_TODO, { refetchQueries: [{ query: GET_TODOS }] });
+    useMutation(DELETE_TODO, { refetchQueries: [{ query: refetchQuery }] });
 
   const handleDeleteClick = async () => {
     if (!todo.id) return;
     await deleteTodo({ variables: { id: todo.id } });
   };
-
-  useEffect(() => {
-    if (deleteData?.id === todo.id) onDelete(todo.id);
-  }, [deleteData]);
 
   return (
     <Card className="flex w-full m-0 gap-3 px-3 py-1 items-center">

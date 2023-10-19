@@ -4,24 +4,31 @@ import Todo from "@/components/todo";
 import { Separator } from "@/components/ui/separator";
 import { GET_TODOS } from "@/lib/gql/queries/todo";
 import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Index = () => {
   const { data } = useQuery(GET_TODOS);
   const [todos, setTodos] = useState<TTodo[]>([]);
 
-  const sortTodos = (todos: TTodo[]) => {
-    return todos
-      .slice()
-      .sort(
-        (a, b) =>
-          new Date(a.createDate).getTime() - new Date(b.createDate).getTime()
-      );
+  const compareDate = (a: any, b: any) => {
+    return new Date(a).getTime() - new Date(b).getTime();
+  };
+
+  const sortTodos = (td: TTodo[]) => {
+    const sorted = td
+      .sort((a, b) => compareDate(a.createDate, b.createDate))
+      .reverse();
+    return sorted;
   };
 
   useEffect(() => {
     if (!data?.todos) return;
-    setTodos(data.todos);
+    setTodos(
+      data.todos.map((todo: TTodo) => {
+        const { __typename, ...todoData } = todo;
+        return todoData;
+      })
+    );
   }, [data]);
 
   return (

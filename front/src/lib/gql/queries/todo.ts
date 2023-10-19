@@ -6,6 +6,7 @@ export const GET_TODOS: any = gql(`
       id
       content
       completed
+      createDate
     }
   }
 `);

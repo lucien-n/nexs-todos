@@ -35,7 +35,7 @@ const Todo = ({ todo, refetchQuery }: Props) => {
   const handleCompleteClick = async (e: ChangeEvent<HTMLInputElement>) => {
     setCompleted(!completed);
 
-    const { __typename, id, content } = todo;
+    const { id, content } = todo;
     await updateTodo({
       variables: {
         updateTodoInput: { id, content, completed: !completed },

@@ -1,10 +1,11 @@
 import { Todo as TTodo } from "@/__generated__/graphql";
+import Filters from "@/components/filters";
 import NewTodo from "@/components/new-todo";
 import Todo from "@/components/todo";
 import { Separator } from "@/components/ui/separator";
 import { GET_TODOS } from "@/lib/gql/queries/todo";
 import { useQuery } from "@apollo/client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Index = () => {
   const { data } = useQuery(GET_TODOS);
@@ -35,6 +36,9 @@ const Index = () => {
     <section className="flex flex-col space-y-5">
       <NewTodo refetchQuery={GET_TODOS} />
       <Separator />
+      <section className="flex gap-3">
+        <Filters setTodos={setTodos} />
+      </section>
       <section className="flex flex-col space-y-2">
         {sortTodos(todos).map((todo) => (
           <Todo todo={todo} key={todo.id} refetchQuery={GET_TODOS} />

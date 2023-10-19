@@ -32,4 +32,6 @@ input CreateTodoInput {
 
 input UpdateTodoInput {
   content: String!
+  id: String!
+  completed: Boolean!
 }

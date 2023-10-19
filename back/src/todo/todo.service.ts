@@ -27,12 +27,16 @@ export class TodoService {
   }
 
   async update(updateTodoInput: UpdateTodoInput) {
+    const { id, ...updateTodoArgs } = updateTodoInput;
+
     const res = await this.repository
       .createQueryBuilder()
       .update()
-      .set(updateTodoInput)
+      .set(updateTodoArgs)
+      .where('id = :id', { id: id })
       .returning('*')
       .execute();
+
     return res.raw?.[0];
   }
 

@@ -15,12 +15,12 @@ const Index = () => {
   }, [data]);
 
   return (
-    <main>
+    <section>
       {todos.map((todo) => (
         <Todo todo={todo} key={todo.id} />
       ))}
       <NewTodo />
-    </main>
+    </section>
   );
 };
 

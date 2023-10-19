@@ -3,25 +3,25 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { ApolloProvider } from "@apollo/client";
 import type { AppProps } from "next/app";
-import { Inter as FontSans } from "next/font/google";
+import { Inter } from "next/font/google";
 
-export const fontSans = FontSans({
+const inter = Inter({
+  variable: "--font",
   subsets: ["latin"],
-  variable: "--font-sans",
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <div
+    <main
       className={cn(
         "min-h-screen bg-background font-sans antialiased",
-        fontSans.className
+        inter.variable
       )}
     >
       <ApolloProvider client={apolloClient}>
         <Component {...pageProps} />
       </ApolloProvider>
-    </div>
+    </main>
   );
 };
 

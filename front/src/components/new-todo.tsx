@@ -1,9 +1,15 @@
-import { useForm } from "react-hook-form";
-import { Form, FormField, FormItem, FormLabel, FormControl } from "./ui/form";
-import { Input } from "./ui/input";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "./ui/button";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 type Props = {};
 

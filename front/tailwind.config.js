@@ -1,9 +1,7 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  content: ['./@/components/**/*.{ts,tsx}', './src/**/*.{js,ts,jsx,tsx,mdx}',],
   theme: {
     container: {
       center: true,
@@ -11,6 +9,11 @@ module.exports = {
       screens: {
         "2xl": "1400px",
       },
+    },
+    fontFamily: {
+      sans: ["var(--font)", "ui-sans-serif", "system-ui"],
+      display: ["var(--font)", "Oswald"],
+      body: ["var(--font)", '"Open Sans"'],
     },
     extend: {
       colors: {
@@ -66,9 +69,6 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-      },
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
       },
     },
   },

@@ -1,5 +1,5 @@
 import { Todo as TTodo } from "@/__generated__/graphql";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 type Props = {
   todo: TTodo;

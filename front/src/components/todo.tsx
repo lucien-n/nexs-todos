@@ -7,10 +7,11 @@ import {
 } from "@/components/ui/card";
 import { DELETE_TODO, UPDATE_TODO } from "@/lib/gql/mutations/todo";
 import { useMutation } from "@apollo/client";
-import { Trash2 } from "lucide-react";
+import { Check, Edit, Trash2 } from "lucide-react";
 import { ChangeEvent, useState } from "react";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
+import { Input } from "./ui/input";
 
 type Props = {
   todo: TTodo;
@@ -26,6 +27,8 @@ const Todo = ({ todo, refetchQuery }: Props) => {
   });
 
   const [completed, setCompleted] = useState<boolean>(todo.completed);
+  const [content, setContent] = useState<string>(todo.content);
+  const [editing, setEditing] = useState<boolean>(false);
 
   const handleDeleteClick = async () => {
     if (!todo.id) return;
@@ -43,6 +46,23 @@ const Todo = ({ todo, refetchQuery }: Props) => {
     });
   };
 
+  const handleEditingClick = async () => {
+    if (editing) {
+      const { id, completed } = todo;
+      await updateTodo({
+        variables: {
+          updateTodoInput: {
+            id,
+            completed,
+            content,
+          },
+        },
+      });
+    }
+
+    setEditing(!editing);
+  };
+
   return (
     <Card className="flex w-full m-0 gap-3 items-center">
       <CardHeader className="p-3 pr-0">
@@ -52,14 +72,33 @@ const Todo = ({ todo, refetchQuery }: Props) => {
           disabled={updateLoading}
         />
       </CardHeader>
-      <CardContent className="py-2 px-1 w-full">{todo.content}</CardContent>
+      <CardContent className="py-2 px-1 w-full">
+        {editing ? (
+          <Input
+            type="text"
+            value={content}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setContent(e.target.value)
+            }
+          />
+        ) : (
+          <p>{content}</p>
+        )}
+      </CardContent>
       <CardFooter className="p-0 m-0">
+        <Button
+          disabled={updateLoading}
+          variant="ghost"
+          onClick={handleEditingClick}
+        >
+          {editing ? <Check /> : <Edit />}
+        </Button>
         <Button
           disabled={deleteLoading}
           variant="ghost"
-          onClick={() => handleDeleteClick()}
+          onClick={handleDeleteClick}
         >
-          <Trash2></Trash2>
+          <Trash2 />
         </Button>
       </CardFooter>
     </Card>

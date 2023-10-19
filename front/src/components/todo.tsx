@@ -17,8 +17,9 @@ type Props = {
 };
 
 const Todo = ({ todo, refetchQuery }: Props) => {
-  const [deleteTodo, { data: deleteData, loading: deleteLoading }] =
-    useMutation(DELETE_TODO, { refetchQueries: [{ query: refetchQuery }] });
+  const [deleteTodo, { loading: deleteLoading }] = useMutation(DELETE_TODO, {
+    refetchQueries: [{ query: refetchQuery }],
+  });
   const [updateTodo, { loading: updateLoading }] = useMutation(UPDATE_TODO, {
     refetchQueries: [{ query: refetchQuery }],
   });

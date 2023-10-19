@@ -19,3 +19,11 @@ export const UPDATE_TODO = gql(`
     }
   }
 `);
+
+export const DELETE_TODO = gql(`
+  mutation DeleteTodo($id: String!) {
+    deleteTodo(id: $id) {
+      id
+    }
+  }
+`);

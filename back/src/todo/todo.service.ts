@@ -19,7 +19,7 @@ export class TodoService {
     const res = await this.repository
       .createQueryBuilder()
       .insert()
-      .into('todo')
+      .into(Todo)
       .values(createTodoInput)
       .returning('*')
       .execute();
@@ -40,7 +40,7 @@ export class TodoService {
     const res = await this.repository
       .createQueryBuilder()
       .delete()
-      .from('todo')
+      .from(Todo)
       .where('id = :id', { id })
       .returning('*')
       .execute();

@@ -37,7 +37,6 @@ const NewTodo = ({ onNew }: Props) => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     const { content } = values;
 
     createTodo({

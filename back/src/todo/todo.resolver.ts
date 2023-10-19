@@ -24,7 +24,7 @@ export class TodoResolver {
   }
 
   @Mutation(() => Todo)
-  deleteTOdo(id: string) {
+  deleteTodo(@Args('id') id: string) {
     return this.service.delete(id);
   }
 }

@@ -27,6 +27,12 @@ const Index = () => {
     [todos, setTodos]
   );
 
+  const onDelete = useCallback(
+    (id: string) => setTodos(todos.filter(({ id: _id }) => id !== _id)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [todos, setTodos]
+  );
+
   useEffect(() => {
     if (!data?.todos) return;
     setTodos(data.todos);
@@ -34,10 +40,10 @@ const Index = () => {
 
   return (
     <section>
-      {sortTodos(todos).map((todo) => (
-        <Todo todo={todo} key={todo.id} />
-      ))}
       <NewTodo onNew={onNew} />
+      {sortTodos(todos).map((todo) => (
+        <Todo todo={todo} key={todo.id} onDelete={onDelete} />
+      ))}
     </section>
   );
 };

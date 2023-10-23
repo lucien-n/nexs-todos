@@ -8,7 +8,7 @@ import {
 import { DELETE_TODO, UPDATE_TODO } from "@/lib/gql/mutations/todo";
 import { useMutation } from "@apollo/client";
 import { Check, Edit, Trash2 } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
@@ -72,7 +72,11 @@ const Todo = ({ todo, refetchQuery }: Props) => {
           disabled={updateLoading}
         />
       </CardHeader>
-      <CardContent className="py-2 px-1 w-full">
+      <CardContent
+        className="py-2 px-1 w-full"
+        onDoubleClick={() => setEditing(true)}
+        onKeyDown={({ key }) => (key === "Enter" ? handleEditingClick() : null)}
+      >
         {editing ? (
           <Input
             type="text"

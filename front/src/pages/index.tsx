@@ -11,24 +11,19 @@ const Index = () => {
   const { data } = useQuery(GET_TODOS);
   const [todos, setTodos] = useState<TTodo[]>([]);
 
-  const compareDate = (a: any, b: any) => {
-    return new Date(a).getTime() - new Date(b).getTime();
-  };
-
-  const sortTodos = (td: TTodo[]) => {
-    const sorted = td
-      .sort((a, b) => compareDate(a.createDate, b.createDate))
-      .reverse();
-    return sorted;
-  };
-
   useEffect(() => {
     if (!data?.todos) return;
     setTodos(
-      data.todos.map((todo: TTodo) => {
-        const { __typename, ...todoData } = todo;
-        return todoData;
-      })
+      data.todos
+        .map((todo) => {
+          const { __typename, ...todoData } = todo;
+          return todoData;
+        })
+        .sort(
+          (a, b) =>
+            new Date(a.createDate).getTime() - new Date(b.createDate).getTime()
+        )
+        .reverse()
     );
   }, [data]);
 
@@ -40,7 +35,7 @@ const Index = () => {
         <Filters setTodos={setTodos} />
       </section>
       <section className="flex flex-col space-y-2">
-        {sortTodos(todos).map((todo) => (
+        {todos.map((todo) => (
           <Todo todo={todo} key={todo.id} refetchQuery={GET_TODOS} />
         ))}
       </section>

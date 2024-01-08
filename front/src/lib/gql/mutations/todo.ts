@@ -3,7 +3,6 @@ import { gql } from "@/__generated__";
 export const CREATE_TODO = gql(`
   mutation CreateTodo($createTodoInput: CreateTodoInput!) {
     createTodo(createTodoInput: $createTodoInput) {
-      id
       content
       completed
     }

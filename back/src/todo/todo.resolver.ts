@@ -15,11 +15,13 @@ export class TodoResolver {
 
   @Mutation(() => Todo)
   createTodo(@Args('createTodoInput') createTodoInput: CreateTodoInput) {
+    console.log('create todo');
     return this.service.create(createTodoInput);
   }
 
   @Mutation(() => Todo)
-  updateTodo(@Args('updateTodoInput') updateTodoInput: UpdateTodoInput) {
+  async updateTodo(@Args('updateTodoInput') updateTodoInput: UpdateTodoInput) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     return this.service.update(updateTodoInput);
   }
 

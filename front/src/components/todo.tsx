@@ -22,6 +22,7 @@ const Todo = ({ todo, refetchQuery }: Props) => {
   const [deleteTodo, { loading: deleteLoading }] = useMutation(DELETE_TODO, {
     refetchQueries: [{ query: refetchQuery }],
   });
+
   const [updateTodo, { loading: updateLoading }] = useMutation(UPDATE_TODO, {
     refetchQueries: [{ query: refetchQuery }],
   });
@@ -43,6 +44,13 @@ const Todo = ({ todo, refetchQuery }: Props) => {
       variables: {
         updateTodoInput: { id, content, completed: !completed },
       },
+      optimisticResponse: {
+        updateTodo: {
+          id,
+          content,
+          completed,
+        },
+      },
     });
   };
 
@@ -55,6 +63,13 @@ const Todo = ({ todo, refetchQuery }: Props) => {
             id,
             completed,
             content,
+          },
+        },
+        optimisticResponse: {
+          updateTodo: {
+            id,
+            content,
+            completed,
           },
         },
       });

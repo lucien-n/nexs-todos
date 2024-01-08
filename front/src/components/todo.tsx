@@ -1,4 +1,4 @@
-import { Todo as TTodo } from "@/__generated__/graphql";
+import { Todo as TTodo, UpdateTodoInput } from "@/__generated__/graphql";
 import {
   Card,
   CardContent,
@@ -12,19 +12,17 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
+import { GET_TODOS } from "@/lib/gql/queries/todo";
 
 type Props = {
   todo: TTodo;
-  refetchQuery: any;
+  onUpdate: (todo: UpdateTodoInput) => void;
+  onChange: (todo: TTodo) => void;
 };
 
-const Todo = ({ todo, refetchQuery }: Props) => {
+const Todo = ({ todo, onUpdate, onChange }: Props) => {
   const [deleteTodo, { loading: deleteLoading }] = useMutation(DELETE_TODO, {
-    refetchQueries: [{ query: refetchQuery }],
-  });
-
-  const [updateTodo, { loading: updateLoading }] = useMutation(UPDATE_TODO, {
-    refetchQueries: [{ query: refetchQuery }],
+    refetchQueries: [{ query: GET_TODOS }],
   });
 
   const [completed, setCompleted] = useState<boolean>(todo.completed);
@@ -37,42 +35,16 @@ const Todo = ({ todo, refetchQuery }: Props) => {
   };
 
   const handleCompleteClick = async () => {
-    setCompleted(!completed);
-
     const { id, content } = todo;
-    await updateTodo({
-      variables: {
-        updateTodoInput: { id, content, completed: !completed },
-      },
-      optimisticResponse: {
-        updateTodo: {
-          id,
-          content,
-          completed,
-        },
-      },
-    });
+    onUpdate({ id, content, completed: !completed });
+
+    setCompleted(!completed);
   };
 
   const handleEditingClick = async () => {
     if (editing) {
       const { id, content, completed } = todo;
-      await updateTodo({
-        variables: {
-          updateTodoInput: {
-            id,
-            completed,
-            content,
-          },
-        },
-        optimisticResponse: {
-          updateTodo: {
-            id,
-            content: "[OR] " + content,
-            completed,
-          },
-        },
-      });
+      onUpdate({ id, content, completed });
     }
 
     setEditing(!editing);
@@ -81,11 +53,7 @@ const Todo = ({ todo, refetchQuery }: Props) => {
   return (
     <Card className="flex w-full m-0 gap-3 items-center">
       <CardHeader className="p-3 pr-0">
-        <Checkbox
-          onClick={handleCompleteClick}
-          checked={completed}
-          disabled={updateLoading}
-        />
+        <Checkbox onClick={handleCompleteClick} checked={completed} />
       </CardHeader>
       <CardContent
         className="py-2 px-1 w-full"
@@ -96,21 +64,16 @@ const Todo = ({ todo, refetchQuery }: Props) => {
           <Input
             type="text"
             value={content}
-            disabled={updateLoading}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setContent(e.target.value)
+              onChange({ ...todo, content: e.target.value })
             }
           />
         ) : (
-          <p>{content}</p>
+          <p>{todo.content}</p>
         )}
       </CardContent>
       <CardFooter className="p-0 m-0">
-        <Button
-          disabled={updateLoading}
-          variant="ghost"
-          onClick={handleEditingClick}
-        >
+        <Button variant="ghost" onClick={handleEditingClick}>
           {editing ? <Check /> : <Edit />}
         </Button>
         <Button

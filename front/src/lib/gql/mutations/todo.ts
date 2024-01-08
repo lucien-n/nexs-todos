@@ -4,7 +4,6 @@ export const CREATE_TODO = gql(`
   mutation CreateTodo($createTodoInput: CreateTodoInput!) {
     createTodo(createTodoInput: $createTodoInput) {
       content
-      completed
     }
   }
 `);

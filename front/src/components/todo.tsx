@@ -56,7 +56,7 @@ const Todo = ({ todo, refetchQuery }: Props) => {
 
   const handleEditingClick = async () => {
     if (editing) {
-      const { id, completed } = todo;
+      const { id, content, completed } = todo;
       await updateTodo({
         variables: {
           updateTodoInput: {
@@ -68,7 +68,7 @@ const Todo = ({ todo, refetchQuery }: Props) => {
         optimisticResponse: {
           updateTodo: {
             id,
-            content,
+            content: "[OR] " + content,
             completed,
           },
         },
@@ -96,6 +96,7 @@ const Todo = ({ todo, refetchQuery }: Props) => {
           <Input
             type="text"
             value={content}
+            disabled={updateLoading}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setContent(e.target.value)
             }
